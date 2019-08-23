@@ -32,7 +32,7 @@ def add_store():
    try:
         Store.create(name=store_name)
         flash("Successfully saved!")
-        return redirect("/store")
+        return redirect("/")
    except:
         flash("Store already exists! Trash!")
         return redirect("/store")
@@ -49,7 +49,7 @@ def add_warehouse():
    try:
         w.save()
         flash("Successfully saved!")
-        return redirect("/warehouse")
+        return redirect("/")
    except:
         flash("Warehouse exists! Trash!")
         return redirect("/warehouse")
