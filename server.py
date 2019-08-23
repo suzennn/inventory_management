@@ -56,8 +56,46 @@ def add_warehouse():
 
 @app.route("/stores")
 def stores():
-   stores=Store.select()
-   return render_template('stores.html',stores=stores)
+    stores=Store.select().order_by(Store.id)
+    return render_template('stores.html',stores=stores)
+
+@app.route('/store/<id_num>')
+def show(id_num):
+    try:
+        store=Store.get_by_id(id_num)
+        return render_template('show.html',store=store)
+    except:
+        flash("No such store! Trash!")
+        return redirect("/stores")
+
+@app.route('/edit/<id_num>')
+def edit(id_num):
+    store=Store.get_by_id(id_num)
+    return render_template('edit.html',store=store)
+
+@app.route("/update/<id_num>",methods=["POST"])
+def update(id_num):
+    update_name = Store.update(name=request.form["chg_store_name"]).where(Store.id == id_num)
+    try:
+        update_name.execute()
+        flash("Name has been changed! :)")
+        return redirect("/stores")
+    except:
+        flash("Attempt unsuccessful! :(")
+        return redirect("url_for('update',id_num)")
+
+@app.route("/delete/<id_num>",methods=["POST"])
+def delete(id_num):
+    store=Store.get_by_id(id_num)
+    delete_warehouses = Warehouse.delete().where(Warehouse.store_id == store.id)
+    try:
+        delete_warehouses.execute()
+        store.delete_instance()
+        flash("Store has been deleted! :(")
+        return redirect("/stores")
+    except:
+        flash("Attempt unsuccessful! >:(")
+        return redirect("/stores")
 
 if __name__ == '__main__':
    app.run()

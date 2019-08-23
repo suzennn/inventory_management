@@ -4,15 +4,25 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">Store Name</th>
-            <th scope="col">Number of Warehouses</th>
+            <th scope="col" style="width:20%">ID</th>
+            <th scope="col" style="width:35%">Store Name</th>
+            <th scope="col" style="width:35%;text-align:center">Number of Warehouses</th>
+            <th scope="col" style="width:10%"></th>
         </tr>
     </thead>
     <tbody>
         {% for store in stores %}
         <tr>
+            <td>{{store.id}}</td>
             <td>{{store.name}}</td>
-            <td>{{store.warehouses.count()}}</td>
+            <td style="text-align:center">{{store.warehouses.count()}}</td>
+            <td class="align-center">
+                <form action="{{url_for('delete',id_num=store.id)}}" method="post">
+                    <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
