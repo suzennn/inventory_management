@@ -1,13 +1,20 @@
 {% extends "_layout.html" %}
 {% block content %}
-<h1>Homepage</h1>
-<button class="btn btn-primary">
-    <a class="text-white" href="{{ url_for('store') }}">Add Store</a>
-</button>
-<button class="btn btn-info">
-    <a class="text-white" href="{{ url_for('warehouse') }}">Add Warehouse</a>
-</button>
-<button class="btn btn-secondary">
-    <a class="text-white" href="{{ url_for('stores') }}">View Store List</a>
-</button>
+<div class="d-flex flex-wrap">
+    <h1 class="row w-100 justify-content-center">Homepage</h1>
+    <div class="row w-100 d-flex justify-content-center">
+        <button class="btn btn-primary mr-2">
+            <a class="text-white" href="{{ url_for('store') }}">Add Store</a>
+        </button>
+        <button class="btn btn-info mr-2">
+            <a class="text-white" href="{{ url_for('warehouse') }}">Add Warehouse</a>
+        </button>
+        <button class="btn btn-secondary mr-2">
+            <a class="text-white" href="{{ url_for('stores') }}">View Store List</a>
+        </button>
+    </div>
+    <div class="row w-100 justify-content-center">
+        <img height=400px class="mt-4 rounded-circle" style="border: 5px solid black" src="http://31.media.tumblr.com/df37ee1cd45e36f27e36af581029f51e/tumblr_mn40fjGygp1rgpyeqo1_500.gif">
+    </div>
+</div>
 {% endblock %}

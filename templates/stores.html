@@ -1,5 +1,13 @@
 {% extends "_layout.html" %}
 {% block content %}
+
+<style>
+a:hover{
+    font-weight: bold;
+    color: red;
+}
+</style>
+
 <h1>Stores</h1>
 <table class="table table-striped">
     <thead>
@@ -14,11 +22,11 @@
         {% for store in stores %}
         <tr>
             <td>{{store.id}}</td>
-            <td>{{store.name}}</td>
+            <td><a style="text-decoration:none;color:black" href='/store/{{store.id}}'>{{store.name}}</a></td>
             <td style="text-align:center">{{store.warehouses.count()}}</td>
             <td class="align-center">
                 <form action="{{url_for('delete',id_num=store.id)}}" method="post">
-                    <button type="submit" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="submit" class="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </form>

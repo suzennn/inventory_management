@@ -28,14 +28,13 @@ def store():
 
 @app.route("/store",methods=["POST"])
 def add_store():
-   store_name = request.form["store_name"]
-   try:
-        Store.create(name=store_name)
+   store = Store(name=request.form["store_name"])
+   if store.save():
         flash("Successfully saved!")
         return redirect("/")
-   except:
+   else:
         flash("Store already exists! Trash!")
-        return redirect("/store")
+        return render_template("store.html",name=request.form["store_name"], errors=store.errors)
 
 @app.route("/warehouse",methods=["GET"])
 def warehouse():

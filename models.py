@@ -10,8 +10,17 @@ class BaseModel(pw.Model):
     updated_at = pw.DateTimeField(default=datetime.datetime.now)
 
     def save(self,*args,**kwargs):
-        self.updated_at = datetime.datetime.now()
-        return super(BaseModel, self).save(*args,**kwargs)
+        self.errors = []
+        self.validate()
+        
+        if len(self.errors) != 0:
+            return 0
+        else:
+            self.updated_at = datetime.datetime.now()
+            return super(BaseModel, self).save(*args,**kwargs)
+
+    def validate(self):
+        return True
 
     class Meta:
         database = db
@@ -19,6 +28,12 @@ class BaseModel(pw.Model):
 
 class Store(BaseModel):
     name = pw.CharField(unique=True)
+
+    def validate(self):
+        duplicate_stores = Store.get_or_none(Store.name == self.name)
+
+        if duplicate_stores:
+            self.errors.append('Store name is not unique')
 
 class Warehouse(BaseModel):
     store = pw.ForeignKeyField(Store,backref='warehouses')
